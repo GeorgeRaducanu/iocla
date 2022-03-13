@@ -3,9 +3,37 @@
 #include <assert.h>
 #include <stdlib.h>
 
-int my_strcmp(const char *s1, const char *s2);
-void *my_memcpy(void *dest, const void *src, size_t n);
-char *my_strcpy(char *dest, const char *src);
+int my_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2) {
+		++s1;
+		++s2;
+	}
+	return (int)(unsigned char)(*s1) - (int)(unsigned char)(*s2);
+}
+
+void *my_memcpy(void *dest, const void *src, size_t n)
+{
+	char *copy_src = (char *)src;
+	char *copy_dest = (char *)dest;
+	for (int i = 0; i < n; ++i)
+		*(copy_dest + i) = *(copy_src + i);
+	return copy_dest;
+}
+
+char *my_strcpy(char *dest, const char *src)
+{
+	if(dest == NULL)
+		return NULL;
+	char *p = dest;
+	while(*src != '\0') {
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+	return p;
+}
 
 int main() {
 	char s1[] = "Abracadabra";
@@ -18,9 +46,9 @@ int main() {
 	Daca functia voastra este implementata corect atunci asertia se va realiza
 	cu succes. In caz contrar, programul va crapa.
 	*/
-	// assert(my_strcmp(s1, s2) == strcmp(s1, s2));
-	// assert(my_memcpy(dest, src, sizeof(src)) == memcpy(dest, src, sizeof(src)));
-	// assert(my_strcpy(dest, src) == strcpy(dest, src));
+	assert(my_strcmp(s1, s2) == strcmp(s1, s2));
+	assert(my_memcpy(dest, src, sizeof(src)) == memcpy(dest, src, sizeof(src)));
+	assert(my_strcpy(dest, src) == strcpy(dest, src));
 	free(dest);
 
 	return 0;
