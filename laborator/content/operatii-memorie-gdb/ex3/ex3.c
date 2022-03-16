@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <time.h>
 #include "pixel.h"
-
+#define GET_PIXEL(a, i ,j) (*(*(a + i) + j))
 /*
 	TODO a
 	Functia primeste ca parametru o imagine si intoarce imaginea rasturnata.
@@ -12,8 +12,20 @@
 	din structura lui Picture, astfel: Linia 1 devine linia n, linia 2 devine
 	linia n - 1, etc.
 */
-
-void reversePic(Picture *pic);
+void swap_potr(Pixel * a, Pixel * b)
+{
+	Pixel tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+void reversePic(Picture *pic)
+{
+	for (int i = 0; i < pic->height/2; ++i) {
+		for (int j = 0; j < pic->width; ++j)
+		swap_potr(&pic->pix_array[i][j], &pic->pix_array[pic->height - i - 1][j]);
+	}
+}
 
 /*
 	TODO b
@@ -25,7 +37,14 @@ void reversePic(Picture *pic);
 	p.b = 0.11 * p.b;
 */
 
-void colorToGray(Picture *pic);
+void colorToGray(Picture *pic) {
+	for (int i = 0; i < pic->height; ++i)
+		for (int j = 0; j < pic->width; ++j) {
+			(*(*(pic->pix_array + i) + j)).R = 0.3 * (*(*(pic->pix_array + i) + j)).R;
+			(*(*(pic->pix_array + i) + j)).G = 0.59 * (*(*(pic->pix_array + i) + j)).G;
+			(*(*(pic->pix_array + i) + j)).B = 0.11 * (*(*(pic->pix_array + i) + j)).B;
+		}
+}
 
 /*
 	Structura unui pixel, cea a unei imagini, precum si generarea acestora
@@ -44,7 +63,11 @@ int main() {
 	Picture *pic = generatePicture(height, width, pix_array);
 
 	printPicture(pic);
-
+	reversePic(pic);
+	printPicture(pic);
+	printf("Color\n");
+	colorToGray(pic);
+	printPicture(pic);
 	freePicture(&pic);
 	freePixelArray(&pix_array, height, width);
 
