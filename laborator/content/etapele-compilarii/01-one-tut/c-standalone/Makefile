@@ -10,9 +10,11 @@ ASFLAGS = -f elf32
 all: hello
 
 hello: hello.o start.o puts.o
+	ld $(LDFLAGS) hello.o start.o puts.o -o hello
 
 hello.o: hello.c
-
+	gcc $(CFLAGS) -c hello.c -o hello.o
+	
 start.o: start.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
