@@ -1,0 +1,2 @@
+//Raducanu George 311CAb
+The string must have length of 8 and the 4-th character must pe "E" in order for the program to accept the string.
