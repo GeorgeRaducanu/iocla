@@ -34,11 +34,13 @@ get_int:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the int's value to `eax` to return it
-
+    mov ebx, [ebp + 8]
+    lea ecx, [ebx + int_x]
+    mov eax, [ecx]
     ; Instructions used to clear the function stack frame and return to the
     ; caller functions. Do not modify them.
     leave
@@ -52,7 +54,10 @@ get_char:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    mov ebx, [ebp + 8]
+    lea ecx, [ ebx + char_y]
+    xor eax, eax
+    mov al, [ecx]
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the char's value to `eax` to return it.
@@ -70,7 +75,8 @@ get_string:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    mov ebx, [ebp + 8]
+    lea eax, [ebx + string_s]
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to get.
     ; TODO --- move the string's address to `eax` to return it.
@@ -88,7 +94,10 @@ set_int:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    mov ebx, [ebp + 8]
+    mov ecx, [ebp + 12]
+    lea edx, [ebx + int_x]
+    mov [edx], ecx
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
 
@@ -105,7 +114,10 @@ set_char:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    mov ebx, [ebp + 8]
+    mov ecx, [ebp + 12]
+    lea edx, [ebx + char_y]
+    mov [edx], cl
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
 
@@ -122,7 +134,11 @@ set_string:
     ; Do not modify them.
     push ebp
     mov ebp, esp
-
+    mov ecx, 14
+    mov edx, [ebp + 8]
+    lea edi, [edx + string_s]
+    mov esi, [ebp + 12]
+    rep movsb
     ; The first argument is a pointer to the beginning of the structure, so you
     ; must use it to calculate the actual address of the data you want to set.
 
@@ -146,15 +162,15 @@ main:
     add esp, 4
 
     ;uncomment when get_int is ready
-    ;push eax
-    ;push int_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push int_format
+    call printf
+    add esp, 8
 
     movzx edx, byte [new_char]
-    ; movzx is the same as
-    ; xor edx, edx
-    ; mov dl, byte [new_char]
+     ;movzx is the same as
+     ;xor edx, edx
+     ;mov dl, byte [new_char]
     push edx
     push sample_obj
     call set_char
@@ -165,10 +181,10 @@ main:
     add esp, 4
 
     ;uncomment when get_char is ready
-    ;push eax
-    ;push char_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push char_format
+    call printf
+    add esp, 8
 
     mov edx, new_string
     push edx
@@ -181,10 +197,10 @@ main:
     add esp, 4
 
     ;uncomment when get_string is ready
-    ;push eax
-    ;push string_format
-    ;call printf
-    ;add esp, 8
+    push eax
+    push string_format
+    call printf
+    add esp, 8
 
     xor eax, eax
     leave
