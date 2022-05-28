@@ -14,8 +14,24 @@ global main
 main:
 
     ; TODO push the elements of the array on the stack
+    xor ebx, ebx
+for:
+    cmp ebx, ARRAY_LEN
+    je afara
+    push dword [input + 4 * (ebx)]
+    inc ebx
+    jmp for
+afara:
     ; TODO retrieve the elements (pop) from the stack into the output array
-
+    xor ebx, ebx
+forr:
+    cmp ebx, ARRAY_LEN
+    je afaraa
+    pop eax
+    mov dword [output + 4 * ebx], eax
+    inc ebx
+    jmp forr
+afaraa:
     PRINTF32 `Reversed array: \n\x0`
     xor ecx, ecx
 print_array:
