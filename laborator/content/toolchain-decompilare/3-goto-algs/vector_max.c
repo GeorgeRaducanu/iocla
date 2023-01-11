@@ -9,7 +9,14 @@ int main(void)
 	/* TODO: Implement finding the maximum value in the vector */
 	max = v[0];
 	i = 1;
-
-	(void) i;
-	(void) max;
+label1:
+	if (i == sizeof(v)/sizeof(v[0]))
+		goto out; 
+	if(max < v[i]) {
+		max = v[i];
+	}
+	i++;
+	goto label1;
+out:
+	printf("%d\n", max);
 }

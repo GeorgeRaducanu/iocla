@@ -1,0 +1,11 @@
+//Raducanu George-Cristian 311CAb
+To solve the problem do the following:
+1 Use Ghidra to decompile and analize the program
+See there is a random value that is added with 0x539 = 1337(10)
+The random value is stored in the rax addres
+2. First run the program using valgrind
+Then type start
+Then enter ni for the program to proceed till you hit the second random and generate the number
+Then press i r(displays the current content of cpu registers)
+Copy decimal the value from rax(if your gdb can only see hex convert it to dec using python) and then to that value add 1337
+3. Enter continue and hit enter, then introduce the number obtained and your program will say t is the correct number and spit out a youtube link also 
