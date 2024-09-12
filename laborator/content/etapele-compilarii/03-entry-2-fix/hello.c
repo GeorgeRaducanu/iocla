@@ -10,7 +10,7 @@ static void bye(void)
 	puts("Bye!");
 }
 
-static int main(void)
+/*static */int main(void)
 {
 	hi();
 	bye();

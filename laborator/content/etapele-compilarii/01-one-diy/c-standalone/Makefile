@@ -7,13 +7,13 @@ ASFLAGS = -f elf32
 
 .PHONY: all clean
 
-all: hello
+all: name
 
-hello: hello.o start.o puts.o
-	ld $(LDFLAGS) hello.o start.o puts.o -o hello
+name: name.o start.o puts.o
+	ld $(LDFLAGS) name.o start.o puts.o -o name
 
-hello.o: hello.c
-	gcc $(CFLAGS) -c hello.c -o hello.o
+name.o: name.c
+	gcc $(CFLAGS) -c name.c -o name.o
 	
 start.o: start.asm
 	$(AS) $(ASFLAGS) -o $@ $<
@@ -22,5 +22,5 @@ puts.o: puts.asm
 	$(AS) $(ASFLAGS) -o $@ $<
 
 clean:
-	-rm -f hello hello.o start.o puts.o
+	-rm -f name name.o start.o puts.o
 	-rm -f *~
